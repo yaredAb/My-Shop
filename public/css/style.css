@@ -141,6 +141,7 @@ nav ul{
     border-radius: 5px;
     padding: 5px;
     background-color: var(--primary);
+    position: relative;
 }
 .product img{
     width: 100%;
@@ -168,6 +169,16 @@ nav ul{
 }
 .product span{
     font-size: 16px;
+}
+.product-price{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    background-color: var(--top);
+    color: var(--primary);
+    font-size: 24px;
+    border-bottom-left-radius: 10px;
 }
 .stock-quantity {
     display: flex;
@@ -245,7 +256,7 @@ nav ul{
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
-    
+
 }
 .form-wrapper{
     background-color: var(--bottom);
@@ -504,7 +515,7 @@ tr:hover{
     font-size: 40px;
     color: var(--secondary);
     font-family: "Josefin sans", sans-serif;
-    
+
 }
 .login-form{
     display: flex;
@@ -523,7 +534,7 @@ tr:hover{
     font-size: 18px;
 }
 .login-wrapper button{
-    padding: 10px;      
+    padding: 10px;
     font-size: 18px;
     width: 50%;
     align-self: center;

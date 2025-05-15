@@ -10,7 +10,7 @@
         <form action="{{route('products.index')}}" method="GET" class="search-form">
             <input type="search" name="product_name" placeholder="Search Product....">
         </form>
-        
+
         <div class="categories">
             <form action="{{route('products.index')}}" method="GET">
                 <input type="hidden" name="product_name" value="{{request('product_name')}}">
@@ -31,10 +31,10 @@
                             <img src="{{asset('storage/'. $product->category->image)}}" alt="{{$product->name}}">
                         @else
                             <div class="no-image">
-                                <h3>SHOP</h3>
+                                <h3>{{$product->name}}</h3>
                             </div>
                         @endif
-                        
+
                         <p>{{$product->name}}</p>
                         <div class="stock-quantity">
                             <span><strong>QTY: </strong>{{$product->quantity}}</span>
@@ -42,7 +42,10 @@
                                 <span class="low-stock">Low Stock!</span>
                             @endif
                         </div>
-                        <span>{{number_format($product->sale_price)}} Birr</span>
+                        @if($product->has_expiry && $product->expiry_date)
+                            <span><strong>Expired at: </strong>{{\Carbon\Carbon::parse($product->expiry_date)->format('F d, Y')}}</span>
+                        @endif
+                        <span class="product-price">{{number_format($product->sale_price)}} Birr</span>
                         <form action="{{route('cart.add', $product->id)}}" method="POST">
                             @csrf
                             <button type="submit">Add to cart</button>
@@ -69,22 +72,22 @@
                                         @csrf
                                         <button type="submit">-</button>
                                     </form>
-                                
+
                                     <span>{{ $item['quantity'] }}</span>
-                                
+
                                     <form action="{{ route('cart.increase', $id) }}" method="POST">
                                         @csrf
                                         <button type="submit">+</button>
                                     </form>
-                                
+
                                     <span> X {{number_format($item['price'])}}= {{ number_format($item['quantity'] * $item['price'] )}} Birr</span>
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     @endforeach
 
                     @php
-                        
+
                         $total = 0;
                         foreach ($cart as $item) {
                             $total += $item['price'] * $item['quantity'];
@@ -99,7 +102,7 @@
                         @csrf
                         <button type="submit" class="purchase-btn">Purchase</button>
                     </form>
-                        
+
                     @else
                         <p>No product in the cart</p>
                 @endif

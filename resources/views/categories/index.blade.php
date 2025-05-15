@@ -11,10 +11,10 @@
             @foreach ($categories as $category)
                 <div class="category-card">
                     @if ($category->image)
-                        <img src="{{asset('storage/'. $category->image)}}" alt="{{$category->name}}">                        
+                        <img src="{{asset('storage/'. $category->image)}}" alt="{{$category->name}}">
                     @else
                         <div class="no-image-2">
-                            <h3>SHOP</h3>
+                            <h3>{{$category->name}}</h3>
                         </div>
                     @endif
                     <h3>{{ $category->name }}</h3>
@@ -25,7 +25,7 @@
                             @csrf
                             @method('DELETE')
                             <button class="deleteBtn">Delete</button>
-                        </form>                        
+                        </form>
                     </div>
                 </div>
             @endforeach
