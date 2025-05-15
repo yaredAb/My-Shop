@@ -42,7 +42,7 @@
                     <li><a href="{{route('sales.report')}}">Report</a></li>
                     <li><a href="{{route('sale.index')}}">All Orders</a></li>
                     <li><a href="{{route('settings')}}">Settings</a></li>
-                @endif                
+                @endif
             </ul>
         </nav>
 
@@ -51,8 +51,14 @@
             use Carbon\Carbon;
 
             $dailyTime = Setting::getValue('daily_hour');
+            if ($dailyTime && Carbon::hasFormat($dailyTime, 'H:i')) {
+                $scheduled_time = Carbon::createFromFormat('H:i', $dailyTime);
+            } else {
+                $scheduled_time = Carbon::createFromFormat('H:i', "00:00");
+            }
+
             $currentTime = Carbon::now()->format('H:i');
-            $scheduled_time = Carbon::createFromFormat('H:i', $dailyTime);
+
         @endphp
         @if ($dailyTime <= $currentTime && $user_role === 'admin')
             <a href="{{route('dailyReport')}}" class="sendDailyReport">Export Daily Report</a>
