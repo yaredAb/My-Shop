@@ -2,26 +2,7 @@
 
 @section('childContent')
     <div class="wrapper">
-<<<<<<< HEAD
         @include('components.navigation')
-=======
-        <nav>
-            <a href="/" class="logo">{{$site_title}}</a>
-            <ul class="nav-links">
-                <li><a href="{{route('products.index')}}">Shop</a></li>
-                <li><a href="{{route('products.create')}}">Add Product</a></li>
-                <li><a href="{{route('categories.create')}}">Add Category</a></li>
-                <li><a href="{{route('products.list')}}">Products</a></li>
-                @if ($user_role === 'admin')
-                    <li><a href="{{route('categories.index')}}">Categories</a></li>
-                    <li><a href="{{route('userList')}}">Users</a></li>
-                    <li><a href="{{route('sales.report')}}">Report</a></li>
-                    <li><a href="{{route('sale.index')}}">All Orders</a></li>
-                    <li><a href="{{route('settings')}}">Settings</a></li>
-                @endif
-            </ul>
-        </nav>
->>>>>>> 56e3740c8eae31e31850f3fdaf96f1f11f2d4aa0
 
         @php
             use App\Models\Setting;

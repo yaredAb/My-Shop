@@ -11,7 +11,6 @@
             <input type="search" name="product_name" placeholder="Search Product....">
         </form>
 
-<<<<<<< HEAD
         <form action="{{route('products.index')}}" method="GET" class="categories">
             <input type="hidden" name="product_name" value="{{request('product_name')}}">
             <button type="submit" name="category_id" value="">All</button>
@@ -19,17 +18,6 @@
                 <button name="category_id" value="{{$category->id}}">{{$category->name}}</button>
             @endforeach
         </form>
-=======
-        <div class="categories">
-            <form action="{{route('products.index')}}" method="GET">
-                <input type="hidden" name="product_name" value="{{request('product_name')}}">
-                <button type="submit" name="category_id" value="">All</button>
-                @foreach ($categories as $category)
-                    <button name="category_id" value="{{$category->id}}">{{$category->name}}</button>
-                @endforeach
-            </form>
-        </div>
->>>>>>> 56e3740c8eae31e31850f3fdaf96f1f11f2d4aa0
     </div>
 
     <div class="product-section">
@@ -52,14 +40,7 @@
                                 <span class="low-stock">Low Stock!</span>
                             @endif
                         </div>
-<<<<<<< HEAD
                         <span class="price-section">{{number_format($product->sale_price)}} Birr</span>
-=======
-                        @if($product->has_expiry && $product->expiry_date)
-                            <span><strong>Expired at: </strong>{{\Carbon\Carbon::parse($product->expiry_date)->format('F d, Y')}}</span>
-                        @endif
-                        <span class="product-price">{{number_format($product->sale_price)}} Birr</span>
->>>>>>> 56e3740c8eae31e31850f3fdaf96f1f11f2d4aa0
                         <form action="{{route('cart.add', $product->id)}}" method="POST">
                             @csrf
                             <button type="submit">Add to cart</button>
@@ -81,30 +62,12 @@
                         <div class="cart-product">
                             <p class="cart-name">{{$item['name']}}</p>
                             <div class="price-section">
-<<<<<<< HEAD
 
                                     <button class="update-cart" data-id="{{$id}}" data-action="decrease">-</button>
                                     <span>{{$item['quantity']}}</span>
                                     <button class="update-cart" data-id="{{$id}}" data-action="increase">+</button>
                                     <span> x {{number_format($item['price'])}} = {{number_format($item['price'] * $item['quantity'])}}</span>
 
-=======
-                                <div class="price-section">
-                                    <form action="{{ route('cart.decrease', $id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit">-</button>
-                                    </form>
-
-                                    <span>{{ $item['quantity'] }}</span>
-
-                                    <form action="{{ route('cart.increase', $id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit">+</button>
-                                    </form>
-
-                                    <span> X {{number_format($item['price'])}}= {{ number_format($item['quantity'] * $item['price'] )}} Birr</span>
-                                </div>
->>>>>>> 56e3740c8eae31e31850f3fdaf96f1f11f2d4aa0
                             </div>
                         </div>
                     @endforeach
@@ -133,7 +96,6 @@
         </div>
     </div>
 @endsection
-<<<<<<< HEAD
 @section('script')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -164,5 +126,3 @@
     </script>
 @endsection
 
-=======
->>>>>>> 56e3740c8eae31e31850f3fdaf96f1f11f2d4aa0
