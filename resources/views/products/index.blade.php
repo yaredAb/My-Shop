@@ -45,14 +45,7 @@
                             @csrf
                             <button type="submit">Add to cart</button>
                         </form>
-                    </div>
                 @endforeach
-            </div>
-        </div>
-
-        <div class="cart-container">
-            <h2>Cart</h2>
-            <div class="cart-products">
                 @php
                     $cart = session('cart', []);
                 @endphp
