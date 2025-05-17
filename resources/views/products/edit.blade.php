@@ -24,8 +24,27 @@
                         </option>
                     @endforeach
                 </select>
+                <p>
+                    <label>
+                        <input type="checkbox" name="has_expiry" id="has_expiry">
+                        Has Expiry Date?
+                    </label>
+                </p>
+                <div id="expiry_date_wrapper" style="display: none;">
+                    <p>Expiry Date:</p>
+                    <input type="date" name="expiry_date" id="expiry_date" value="{{ old('expiry_date') }}">
+                </div>
                 <button type="submit">Save</button>
             </form>
         </div>
     </div>
+
+    @section('scripts')
+        <script>
+            document.getElementById('has_expiry').addEventListener('change', function () {
+                const wrapper = document.getElementById('expiry_date_wrapper');
+                wrapper.style.display = this.checked ? 'block' : 'none';
+            })
+        </script>
+    @endsection
 @endsection

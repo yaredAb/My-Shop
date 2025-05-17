@@ -53,15 +53,31 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->merge([
+            'has_expiry' => $request->has('has_expiry')
+        ]);
         $request->validate([
             'name' => 'required',
             'bought_price' => 'required|numeric',
             'sale_price' => 'required|numeric',
             'quantity' => 'required|integer',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'required|exists:categories,id',
+            'has_expiry' => 'nullable|boolean',
+            'expiry_date' => 'nullable|date|required_if:has_expiry, true',
         ]);
 
-        Product::create($request->all());
+//        dd($request->all());
+
+        Product::create([
+            'name' => $request->name,
+            'bought_price' => $request->bought_price,
+            'sale_price' => $request->sale_price,
+            'quantity' => $request->quantity,
+            'category_id' => $request->category_id,
+            'has_expiry' => $request->has('has_expiry'),
+            'expiry_date' => $request->has('has_expiry') ? $request->expiry_date : null,
+        ]);
 
         return redirect()->route('products.index')->with('success', 'Product created');
     }
@@ -88,7 +104,29 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $product->update($request->all());
+        $request->merge([
+            'has_expiry' => $request->has('has_expiry')
+        ]);
+        $request->validate([
+            'name' => 'required',
+            'bought_price' => 'required|numeric',
+            'sale_price' => 'required|numeric',
+            'quantity' => 'required|integer',
+            'category_id' => 'required|exists:categories,id',
+            'has_expiry' => 'nullable|boolean',
+            'expiry_date' => 'nullable|date|required_if:has_expiry, true',
+        ]);
+
+
+        $product->update([
+            'name' => $request->name,
+            'bought_price' => $request->bought_price,
+            'sale_price' => $request->sale_price,
+            'quantity' => $request->quantity,
+            'category_id' => $request->category_id,
+            'has_expiry' => $request->has('has_expiry'),
+            'expiry_date' => $request->has('has_expiry') ? $request->expiry_date : null,
+        ]);
         return redirect()->route('products.index')->with('success', 'Product updated');
     }
 
