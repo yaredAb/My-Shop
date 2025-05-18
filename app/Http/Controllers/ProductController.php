@@ -55,10 +55,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
-
-=======
->>>>>>> responsivness
         $request->merge([
             'has_expiry' => $request->has('has_expiry')
         ]);
@@ -67,29 +63,18 @@ class ProductController extends Controller
             'bought_price' => 'required|numeric',
             'sale_price' => 'required|numeric',
             'quantity' => 'required|integer',
-<<<<<<< HEAD
-=======
-            'stock_threshold' => 'required|integer',
->>>>>>> responsivness
             'category_id' => 'required|exists:categories,id',
             'has_expiry' => 'nullable|boolean',
             'expiry_date' => 'nullable|date|required_if:has_expiry, true',
         ]);
 
-<<<<<<< HEAD
 //        dd($request->all());
 
-=======
->>>>>>> responsivness
         Product::create([
             'name' => $request->name,
             'bought_price' => $request->bought_price,
             'sale_price' => $request->sale_price,
             'quantity' => $request->quantity,
-<<<<<<< HEAD
-=======
-            'stock_threshold' => $request->stock_threshold,
->>>>>>> responsivness
             'category_id' => $request->category_id,
             'has_expiry' => $request->has('has_expiry'),
             'expiry_date' => $request->has('has_expiry') ? $request->expiry_date : null,
@@ -128,10 +113,6 @@ class ProductController extends Controller
             'bought_price' => 'required|numeric',
             'sale_price' => 'required|numeric',
             'quantity' => 'required|integer',
-<<<<<<< HEAD
-=======
-            'stock_threshold' => 'required|integer',
->>>>>>> responsivness
             'category_id' => 'required|exists:categories,id',
             'has_expiry' => 'nullable|boolean',
             'expiry_date' => 'nullable|date|required_if:has_expiry, true',
@@ -143,10 +124,6 @@ class ProductController extends Controller
             'bought_price' => $request->bought_price,
             'sale_price' => $request->sale_price,
             'quantity' => $request->quantity,
-<<<<<<< HEAD
-=======
-            'stock_threshold' => $request->stock_threshold,
->>>>>>> responsivness
             'category_id' => $request->category_id,
             'has_expiry' => $request->has('has_expiry'),
             'expiry_date' => $request->has('has_expiry') ? $request->expiry_date : null,

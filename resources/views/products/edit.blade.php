@@ -28,21 +28,13 @@
                 </select>
                 <p>
                     <label>
-<<<<<<< HEAD
                         <input type="checkbox" name="has_expiry" id="has_expiry">
-=======
-                        <input type="checkbox" name="has_expiry" id="has_expiry" {{$product->has_expiry ? 'checked' : ''}}>
->>>>>>> responsivness
                         Has Expiry Date?
                     </label>
                 </p>
                 <div id="expiry_date_wrapper" style="display: none;">
                     <p>Expiry Date:</p>
-<<<<<<< HEAD
                     <input type="date" name="expiry_date" id="expiry_date" value="{{ old('expiry_date') }}">
-=======
-                    <input type="date" name="expiry_date" id="expiry_date" value="{{ $product->expiry_date }}">
->>>>>>> responsivness
                 </div>
                 <button type="submit">Save</button>
             </form>

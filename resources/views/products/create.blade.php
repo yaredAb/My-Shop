@@ -47,22 +47,13 @@
                 </form>
             </div>
         </div>
-<<<<<<< HEAD
 
     @section('scripts')
-=======
-@endsection
-
-@section('script')
->>>>>>> responsivness
         <script>
             document.getElementById('has_expiry').addEventListener('change', function () {
                 const wrapper = document.getElementById('expiry_date_wrapper');
                 wrapper.style.display = this.checked ? 'block' : 'none';
             })
         </script>
-<<<<<<< HEAD
     @endsection
-=======
->>>>>>> responsivness
 @endsection
