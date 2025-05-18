@@ -45,6 +45,10 @@ nav{
     align-items: center;
     padding: 10px;
     border-radius: 5px;
+    position: relative;
+}
+#toggle-menu{
+    display: none;
 }
 nav .logo{
     font-size: 40px;
@@ -183,16 +187,6 @@ nav ul{
 }
 .product span{
     font-size: 16px;
-}
-.product-price{
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    background-color: var(--top);
-    color: var(--primary);
-    font-size: 24px;
-    border-bottom-left-radius: 10px;
 }
 .stock-quantity {
     display: flex;
@@ -697,7 +691,6 @@ tr:hover{
 .question{
     font-size: 20px;
 }
-
 .mobile-cart{
     display: none;
 }
