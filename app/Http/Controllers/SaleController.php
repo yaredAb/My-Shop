@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\TelegramHelper;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Setting;
@@ -81,9 +82,9 @@ class SaleController extends Controller
 
             $hourLabels = $hourlySales->pluck('hour')->map(function ($h) {
                 return str_pad($h, 2, '0', STR_PAD_LEFT) . ':00';
-            });                
+            });
             $hourData = $hourlySales->pluck('total');
-        
+
         return view('sales.report', [
             'month' => $month,
             'totalRevenue' => $totalRevenue,
@@ -102,24 +103,24 @@ class SaleController extends Controller
         $month = $request->input('month', now()->format('Y-m'));
         $start = Carbon::parse($month . '-01')->startOfMonth();
         $end = $start->copy()->endOfMonth();
-    
+
         $sales = Sale::whereBetween('sold_at', [$start, $end])->get();
-    
+
         $totalRevenue = $sales->sum(fn($sale) => $sale->price * $sale->quantity);
-    
+
         $topProduct = Sale::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
             ->whereBetween('sold_at', [$start, $end])
             ->groupBy('product_id')
             ->orderByDesc('total_quantity')
             ->with('product')
             ->first();
-    
+
         $topDay = Sale::select(DB::raw('DATE(sold_at) as day'), DB::raw('SUM(price * quantity) as total'))
             ->whereBetween('sold_at', [$start, $end])
             ->groupBy('day')
             ->orderByDesc('total')
             ->first();
-        
+
         $pdf = FacadePdf::loadView('sales.report_pdf', [
             'month' => $month,
             'totalRevenue' => $totalRevenue,
@@ -140,10 +141,14 @@ class SaleController extends Controller
 
         $lowStockProducts = Product::whereColumn('quantity', '<=', 'stock_threshold')->get();
 
+
+        $expiringSoon = Product::whereBetween('expiry_date', [$now, $sixMonthsFromNow])->get();
+
         $pdf = FacadePdf::loadView('sales.daily_report', [
             'sales' => $sales,
             'totalRevenue' => $totalRevenue,
             'lowStockProducts' => $lowStockProducts,
+            'expiringSoon' => $expiringSoon,
             'date' => $today->toFormattedDateString()
         ]);
 
@@ -151,41 +156,15 @@ class SaleController extends Controller
         $filePath = storage_path('app/' . $fileName);
 
         file_put_contents($filePath, $pdf->output());
-
+        $caption = "📄 Daily Sales Report for " . $today->toFormattedDateString();
         //send to telegram
-        Http::attach(
-            'document', file_get_contents($filePath), $fileName)
-            ->post("https://api.telegram.org/bot" . config('services.telegram.bot_token') . "/sendDocument",[
-                'chat_id' => config('services.telegram.chat_id'),
-                'caption' => "📄 Daily Sales Report for " . $today->toFormattedDateString()
-            ]);
+        TelegramHelper::sendTelegramMessageFile($filePath, $fileName, $caption);
         unlink($filePath);
 
         return back()->with('success', 'Daily report send to Telegram');
-        
-    }
 
-    public function maybeSendDailyReport() {
-        $current_time = now()->format('H:i');
-        $now = now();
-        $today = $now->toDateString();
-
-        $cacheKey = 'daily_report_sent_'. $today;
-        $dailyHour = Setting::getValue('daily_hour');
-
-
-        if($current_time >= $dailyHour) {
-            $this->sendDailyReport();
-
-            Cache::put($cacheKey, true, now()->endOfDay());
-
-            // return response('Report sent at ' . $current_time . 'as you programmed at ' . $dailyHour);
-            return redirect()->back();
-        }
-
-        return response('Not time yet. Current time is' . $current_time . '. but you alarmed at ' . $dailyHour, 200);
     }
 
 
-    
+
 }

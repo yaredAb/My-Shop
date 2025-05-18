@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -32,6 +33,7 @@ class ProductController extends Controller
         }
 
         $todaysSale = Sale::whereDate('sold_at', today())->sum(DB::raw('price * quantity'));
+
         return view('products.index', [
             'products' => $products->get(),
             'categories' => Category::all(),
@@ -53,7 +55,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< HEAD
 
+=======
+>>>>>>> responsivness
         $request->merge([
             'has_expiry' => $request->has('has_expiry')
         ]);
@@ -62,18 +67,29 @@ class ProductController extends Controller
             'bought_price' => 'required|numeric',
             'sale_price' => 'required|numeric',
             'quantity' => 'required|integer',
+<<<<<<< HEAD
+=======
+            'stock_threshold' => 'required|integer',
+>>>>>>> responsivness
             'category_id' => 'required|exists:categories,id',
             'has_expiry' => 'nullable|boolean',
             'expiry_date' => 'nullable|date|required_if:has_expiry, true',
         ]);
 
+<<<<<<< HEAD
 //        dd($request->all());
 
+=======
+>>>>>>> responsivness
         Product::create([
             'name' => $request->name,
             'bought_price' => $request->bought_price,
             'sale_price' => $request->sale_price,
             'quantity' => $request->quantity,
+<<<<<<< HEAD
+=======
+            'stock_threshold' => $request->stock_threshold,
+>>>>>>> responsivness
             'category_id' => $request->category_id,
             'has_expiry' => $request->has('has_expiry'),
             'expiry_date' => $request->has('has_expiry') ? $request->expiry_date : null,
@@ -112,6 +128,10 @@ class ProductController extends Controller
             'bought_price' => 'required|numeric',
             'sale_price' => 'required|numeric',
             'quantity' => 'required|integer',
+<<<<<<< HEAD
+=======
+            'stock_threshold' => 'required|integer',
+>>>>>>> responsivness
             'category_id' => 'required|exists:categories,id',
             'has_expiry' => 'nullable|boolean',
             'expiry_date' => 'nullable|date|required_if:has_expiry, true',
@@ -123,6 +143,10 @@ class ProductController extends Controller
             'bought_price' => $request->bought_price,
             'sale_price' => $request->sale_price,
             'quantity' => $request->quantity,
+<<<<<<< HEAD
+=======
+            'stock_threshold' => $request->stock_threshold,
+>>>>>>> responsivness
             'category_id' => $request->category_id,
             'has_expiry' => $request->has('has_expiry'),
             'expiry_date' => $request->has('has_expiry') ? $request->expiry_date : null,
@@ -243,7 +267,10 @@ class ProductController extends Controller
                 $updatedProduct = Product::find($productId);
                 $message = "⚠️ Low Stock Alert!\nProduct: {$updatedProduct->name}\nRemaining: {$updatedProduct->quantity}";
                 try{
-                    $this->sendTelegramMessage($updatedProduct, $message);
+                    if($updatedProduct->quantity <= $updatedProduct->stock_threshold) {
+                        \App\Helper\TelegramHelper::sendTelegramMessage($message);
+                    }
+
                 } catch(\Exception $e) {
                     log_to_db('error', 'Telegram alert failed');
                 }
@@ -258,17 +285,6 @@ class ProductController extends Controller
         }catch(\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Failed to complete sale.');
-        }
-    }
-
-    public function sendTelegramMessage($product, $message) {
-        $token = Setting::getValue('telegram_bot_token');
-        $chat_id = Setting::getValue('telegram_chat_id');
-        if($product->quantity <= $product->stock_threshold) {
-            Http::post("https://api.telegram.org/bot". $token . "/sendMessage",[
-                'chat_id' => $chat_id,
-                'text' => $message
-            ]);
         }
     }
 

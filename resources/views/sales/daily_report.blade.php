@@ -42,5 +42,12 @@
     @else
         <p>No low stock products 🎉</p>
     @endif
+
+    <h3>Expiring Soon</h3>
+    <ul>
+        @foreach($expiringSoon as $product)
+            <li>{{$product->name}} - Expires on {{ \Carbon\Carbon::parse($product->expiry_date)->format('F m, Y')  }}</li>
+        @endforeach
+    </ul>
 </body>
 </html>

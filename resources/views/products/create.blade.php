@@ -24,6 +24,8 @@
                     <input type="number" step="0.01" name="sale_price">
                     <p>Quantity:</p>
                     <input type="number" name="quantity">
+                    <p>Stock Threshold:</p>
+                    <input type="number" name="stock_threshold">
                     <p>Category:</p>
                     <select name="category_id">
                         <option value="">--select category--</option>
@@ -45,13 +47,22 @@
                 </form>
             </div>
         </div>
+<<<<<<< HEAD
 
     @section('scripts')
+=======
+@endsection
+
+@section('script')
+>>>>>>> responsivness
         <script>
             document.getElementById('has_expiry').addEventListener('change', function () {
                 const wrapper = document.getElementById('expiry_date_wrapper');
                 wrapper.style.display = this.checked ? 'block' : 'none';
             })
         </script>
+<<<<<<< HEAD
     @endsection
+=======
+>>>>>>> responsivness
 @endsection

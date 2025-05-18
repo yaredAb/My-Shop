@@ -34,12 +34,29 @@
                         @endif
 
                         <p>{{$product->name}}</p>
+
                         <div class="stock-quantity">
                             <span><strong>QTY: </strong>{{$product->quantity}}</span>
                             @if ($product->quantity <= $product->stock_threshold)
                                 <span class="low-stock">Low Stock!</span>
                             @endif
                         </div>
+
+                            @php
+                                $status = \App\Helper\DateHelper::expiryStatus($product->expiry_date);
+                            @endphp
+                            @if($product->has_expiry && $product->expiry_date)
+                                <span
+                                @class([
+                                    'text-red-700 font-bold' => $status === 'expired',
+                                    'text-orange-400 font-bold' => $status === 'near',
+                                    'text-green-700 font-bold' => $status === 'far'
+                                ])>
+                                {{\App\Helper\DateHelper::expiryRemaining($product->expiry_date)}}
+                            </span>
+                            @endif
+
+
                         <span class="price-section">{{number_format($product->sale_price)}} Birr</span>
                         <form action="{{route('cart.add', $product->id)}}" method="POST">
                             @csrf

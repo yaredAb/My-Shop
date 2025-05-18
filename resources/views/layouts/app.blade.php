@@ -4,6 +4,7 @@
     <div class="wrapper">
         @include('components.navigation')
 
+<<<<<<< HEAD
         @php
             use App\Models\Setting;
             use Carbon\Carbon;
@@ -22,6 +23,8 @@
             <a href="{{route('dailyReport')}}" class="sendDailyReport">Export Daily Report</a>
         @endif
 
+=======
+>>>>>>> responsivness
         @yield('content')
     </div>
 

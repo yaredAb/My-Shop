@@ -16,11 +16,15 @@ li{
 a{
     text-decoration: none;
 }
+input, select{
+    background-color: var(--primary);
+}
 input:focus, select:focus{
     outline: none;
 }
 button{
     cursor: pointer;
+    background-color: var(--bg2);
 }
 body{
     font-family: "Poppins", sans-serif;
@@ -31,7 +35,7 @@ body{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     box-sizing: border-box;
 }
 nav{
@@ -62,6 +66,9 @@ nav ul{
     background-color: var(--secondary);
     color: var(--bg);
     transition: background-color 0.3s ease-in;
+}
+.container{
+    max-width: 100%;
 }
 
 
@@ -268,11 +275,7 @@ nav ul{
 
 
 .form-container{
-    padding: 20px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
+    align-self: center;
 
 }
 .form-wrapper{
@@ -438,6 +441,9 @@ tr:hover{
     font-size: 18px;
     border-radius: 5px;
     padding: 10px;
+}
+.cat-header h1{
+    font-size: 24px;
 }
 .cat-wrapper{
     display: flex;
@@ -894,14 +900,6 @@ tr:hover{
 
 
     .form-container{
-        padding: 10px;
-        transform: translate(0);
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        top: 0;
-        left: 0;
         max-width: 100%;
     }
     .form-container h2{

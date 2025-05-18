@@ -30,7 +30,10 @@ $cart = session('cart', []);
                 @endphp
 
                 <p class="total-cart">Total: {{number_format($total)}} Birr</p>
-                <button class="purchase">Purchase</button>
+                <form action="{{route('checkout')}}" method="POST">
+                    @csrf
+                    <button type="submit" class="purchase">Purchase</button>
+                </form>
                 <hr>
                 <p class="total-cart"></p>
 
